@@ -46,13 +46,8 @@ print('\n\nWelcome to **ADVENTURES** in Python\n\n')
 
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
-player_loc = {
-    'name': player.get_loc().get_name(),
-    'desc': player.get_loc().get_desc()
-}
-print(f"You find yourself {player_loc['name']}")
-print(f"{player_loc['desc']}")
-
+print(f"You find yourself {player.location.name}")
+print(f"{player.location.desc}")
 
 # * Waits for user input and decides what to do.
 instructions = 'Move [n], [e], [s], or [w]. [q] to quit.\n >  '

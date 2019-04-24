@@ -6,9 +6,8 @@ class Room:
     def __init__(self, name, desc):
         self.name = name
         self.desc = desc
-
-    def get_name(self):
-        return self.name
-
-    def get_desc(self):
-        return self.desc
+        # connected to the room:
+        self.n_to = False
+        self.e_to = False
+        self.s_to = False
+        self.w_to = False
