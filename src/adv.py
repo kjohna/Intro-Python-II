@@ -7,17 +7,17 @@ room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
 
-    'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
+    'foyer':    Room("In a Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
+    'overlook': Room("At a Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
 the distance, but there is no way across the chasm."""),
 
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
+    'narrow':   Room("In a Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air."""),
 
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
+    'treasure': Room("In the Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
@@ -56,13 +56,25 @@ while not u_input == 'q':
     # If the user enters a cardinal direction, attempt to move to that room.
     # Print an error message if the movement isn't allowed.
     if u_input == 'n':
-        print('Move North')
+        if player.location.n_to:
+            player.move_to(player.location.n_to)
+        else:
+            print('There is nothing to the North!')
     elif u_input == 'e':
-        print('Move East')
+        if player.location.e_to:
+            player.move_to(player.location.e_to)
+        else:
+            print('There is nothing to the East!')
     elif u_input == 's':
-        print('Move South')
+        if player.location.s_to:
+            player.move_to(player.location.s_to)
+        else:
+            print('There is nothing to the South!')
     elif u_input == 'w':
-        print('Move West')
+        if player.location.w_to:
+            player.move_to(player.location.w_to)
+        else:
+            print('There is nothing to the West!')
     # Any other input
     else:
         print(f'Invalid input.')
