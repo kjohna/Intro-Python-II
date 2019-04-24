@@ -1,4 +1,5 @@
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -38,14 +39,40 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player("player name", room['outside'])
+print('\n\nWelcome to **ADVENTURES** in Python\n\n')
 
 # Write a loop that:
-#
+
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
+player_loc = {
+    'name': player.get_loc().get_name(),
+    'desc': player.get_loc().get_desc()
+}
+print(f"You find yourself {player_loc['name']}")
+print(f"{player_loc['desc']}")
+
+
 # * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+instructions = 'Move [n], [e], [s], or [w]. [q] to quit.\n >  '
+u_input = input(f'\nPlease decide what to do: {instructions}').lower()
+while not u_input == 'q':
+    # If the user enters a cardinal direction, attempt to move to that room.
+    # Print an error message if the movement isn't allowed.
+    if u_input == 'n':
+        print('Move North')
+    elif u_input == 'e':
+        print('Move East')
+    elif u_input == 's':
+        print('Move South')
+    elif u_input == 'w':
+        print('Move West')
+    # Any other input
+    else:
+        print(f'Invalid input.')
+    # prompt after each input
+    u_input = input(f'\nPlease decide what to do: {instructions}').lower()
+
+# End of u_input loop: if the user enters "q", quit the game.
+print("\n\nAdventure complete! Quitting..\n\n")
