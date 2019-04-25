@@ -56,9 +56,9 @@ instructions = '''\nMove [n], [e], [s], or [w].
     \n[i] or [inventory] to see items in your inventory.
     \n[q] to quit.'''
 u_input = input(
-    f'\nPlease decide what to do. [help] for available commands.\n> ')
-.lower()
-.split(" ")
+    f'\nPlease decide what to do. [help] for available commands.\n> ')\
+    .lower()\
+    .split(" ")
 while not u_input[0] == 'q':
     u_input_len = len(u_input)
     # single command
@@ -117,9 +117,9 @@ while not u_input[0] == 'q':
         print(f'Invalid input.')
     # prompt after each input
     u_input = input(
-        f'\nPlease decide what to do. [help] for available commands.\n> ')
-    .lower()
-    .split(" ")
+        f'\nPlease decide what to do. [help] for available commands.\n> ')\
+        .lower()\
+        .split(" ")
 
 # End of u_input loop: if the user enters "q", quit the game.
 print("\n\nAdventure complete! Quitting..\n\n")
