@@ -4,9 +4,11 @@ from player import Player
 # Declare all the rooms
 
 room = {
-    'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
-
+    'outside':  Room(
+        "Outside Cave Entrance",
+        "North of you, the cave mount beckons",
+        ["rock", "wood", "stick"]
+    ),
     'foyer':    Room("In a Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
 
@@ -46,8 +48,7 @@ print('\n\nWelcome to **ADVENTURES** in Python\n\n')
 
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
-print(f"You find yourself {player.location.name}")
-print(f"{player.location.desc}")
+player.location.describe_room()
 
 # * Waits for user input and decides what to do.
 instructions = 'Move [n], [e], [s], or [w]. [q] to quit.\n >  '

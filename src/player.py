@@ -9,4 +9,4 @@ class Player:
 
     def move_to(self, new_loc):
         self.location = new_loc
-        print(f"You find yourself {self.location.name}. {self.location.desc}")
+        self.location.describe_room()

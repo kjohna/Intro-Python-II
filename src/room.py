@@ -3,7 +3,7 @@
 
 
 class Room:
-    def __init__(self, name, desc):
+    def __init__(self, name, desc, items=[]):
         self.name = name
         self.desc = desc
         # connected to the room:
@@ -11,3 +11,22 @@ class Room:
         self.e_to = False
         self.s_to = False
         self.w_to = False
+        # contained within room:
+        self.items = items
+
+    def describe_room(self):
+        print(f"You find yourself {self.name}")
+        print(f"{self.desc}")
+        if(len(self.items)):
+            print("Around you you see: ")
+            print(*self.items, sep="\n")
+
+    def add_item(self, item):
+        self.items.append(item)
+
+    def remove_item(self, item_name):
+        prev_items = self.items[:]
+        self.items = [filter(
+            lambda item: item.name != item_name,
+            prev_items
+        )]
