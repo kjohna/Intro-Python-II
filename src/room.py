@@ -3,20 +3,27 @@
 
 
 class Room:
-    def __init__(self, prefix, name, desc, items=[]):
+    def __init__(self, prefix, name, desc, is_lit=True, items=[]):
         self.prefix = prefix
         self.name = name
         self.desc = desc
+        # if room is naturally lit:
+        self.is_lit = is_lit
+        # if player is lighting room:
+        self.player_lit = False
+        # contained within room:
+        self.items = items
         # connected to the room:
         self.n_to = False
         self.e_to = False
         self.s_to = False
         self.w_to = False
-        # contained within room:
-        self.items = items
 
     def __str__(self):
         # prints user-relevant info about room:
+        # if room is dark
+        if not (self.is_lit or self.player_lit):
+            return 'It is too dark to see!'
         info = ''
         # room name/description
         info += f'You find yourself {self.prefix} {self.name}\n{self.desc}\n'
