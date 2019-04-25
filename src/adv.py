@@ -88,10 +88,15 @@ while not u_input[0] == 'q':
         noun = u_input[1]
         if verb == 'take':
             if player.location.remove_item(noun):
-                player.take_item(noun)
+                player.take_item({'name': noun})
                 player.location.describe_room()
             else:
                 print(f'There is no {noun} here.')
+        if verb == 'drop':
+            if player.drop_item(noun):
+                player.location.add_item({'name': noun})
+            else:
+                print(f'You do not have {noun}.')
         else:
             print(f'Your player does not know how to {verb}.')
     # Any other input

@@ -15,12 +15,13 @@ class Player:
     def take_item(self, item):
         self.items.append(item)
 
-    def drop_item(self, item):
+    def drop_item(self, item_name):
         prev_items = self.items[:]
-        self.items = [filter(
-            lambda item: item.name != item_name,
-            prev_items
-        )]
+        self.items = [item for item in prev_items if item['name'] != item_name]
+        if len(prev_items) > len(self.items):
+            return True
+        else:
+            return False
 
     def desc_inventory(self):
         if len(self.items):
