@@ -11,12 +11,13 @@ item = {
 }
 
 # Declare all the rooms
-
+# Room(prefix, name, desc, is_lit=True, items=[])
 room = {
     'outside':  Room(
         "Outside",
         "Cave Entrance",
         "North of you, the cave mount beckons",
+        True,
         [item['rock'], item['wood'], item['stick'], item['torch']]
     ),
     'foyer':    Room("In a", "Foyer", """Dim light filters in from the south. Dusty
@@ -26,12 +27,22 @@ passages run north and east."""),
 into the darkness. Ahead to the north, a light flickers in
 the distance, but there is no way across the chasm."""),
 
-    'narrow':   Room("In a", "Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+    'narrow':   Room(
+        "In a",
+        "Narrow Passage",
+        """The narrow passage bends here from west
+to north. The smell of gold permeates the air.""",
+        False
+    ),
 
-    'treasure': Room("In the", "Treasure Chamber", """You've found the long-lost treasure
+    'treasure': Room(
+        "In the",
+        "Treasure Chamber",
+        """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""",
+        False
+    ),
 }
 
 
@@ -51,6 +62,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+# player = Player("player name", room['narrow'], [item['torch']])
 player = Player("player name", room['outside'])
 print('\n\nWelcome to **ADVENTURES** in Python\n\n')
 
@@ -62,6 +74,7 @@ print(player.location)
 # * Waits for user input and decides what to do.
 instructions = '''\nMove [n], [e], [s], or [w].
     \n[take item] or [drop item] to take or drop items around you.
+    \n[select item] to inspect item in your inventory.
     \n[i] or [inventory] to see items in your inventory.
     \n[l] to look around the current room.
     \n[q] to quit.'''
@@ -98,7 +111,7 @@ while not u_input[0] == 'q':
         elif u_input[0] == 'i' or u_input[0] == 'inventory':
             player.desc_inventory()
         elif u_input[0] == 'l':
-            player.location.desc_inventory()
+            print(player.location)
         elif u_input[0] == 'help':
             print(instructions)
         else:
@@ -118,6 +131,13 @@ while not u_input[0] == 'q':
             if player.drop_item(noun):
                 player.desc_inventory()
                 player.location.desc_inventory()
+            else:
+                print(f'You do not have {noun}.')
+        elif verb == 'select':
+            # check if player has item
+            item = player.has_item(noun)
+            if item:
+                item.selected(player)
             else:
                 print(f'You do not have {noun}.')
         else:
