@@ -7,7 +7,7 @@ room = {
     'outside':  Room(
         "Outside Cave Entrance",
         "North of you, the cave mount beckons",
-        ["rock", "wood", "stick"]
+        [{'name': "rock"}, {'name': "wood"}, {'name': "stick"}]
     ),
     'foyer':    Room("In a Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -52,35 +52,55 @@ player.location.describe_room()
 
 # * Waits for user input and decides what to do.
 instructions = 'Move [n], [e], [s], or [w]. [q] to quit.\n >  '
-u_input = input(f'\nPlease decide what to do: {instructions}').lower()
-while not u_input == 'q':
-    # If the user enters a cardinal direction, attempt to move to that room.
-    # Print an error message if the movement isn't allowed.
-    if u_input == 'n':
-        if player.location.n_to:
-            player.move_to(player.location.n_to)
+player.desc_inventory()
+u_input = input(
+    f'\nPlease decide what to do: {instructions}').lower().split(" ")
+while not u_input[0] == 'q':
+    u_input_len = len(u_input)
+    # single command
+    if u_input_len == 1:
+        # If the user enters a cardinal direction, attempt to move to that room
+        # Print an error message if the movement isn't allowed.
+        if u_input[0] == 'n':
+            if player.location.n_to:
+                player.move_to(player.location.n_to)
+            else:
+                print('There is nothing to the North!')
+        elif u_input[0] == 'e':
+            if player.location.e_to:
+                player.move_to(player.location.e_to)
+            else:
+                print('There is nothing to the East!')
+        elif u_input[0] == 's':
+            if player.location.s_to:
+                player.move_to(player.location.s_to)
+            else:
+                print('There is nothing to the South!')
+        elif u_input[0] == 'w':
+            if player.location.w_to:
+                player.move_to(player.location.w_to)
+            else:
+                print('There is nothing to the West!')
+    # double command
+    elif u_input_len == 2:
+        # assume first part is verb, second is noun
+        verb = u_input[0]
+        noun = u_input[1]
+        if verb == 'take':
+            if player.location.remove_item(noun):
+                player.take_item(noun)
+                player.location.describe_room()
+            else:
+                print(f'There is no {noun} here.')
         else:
-            print('There is nothing to the North!')
-    elif u_input == 'e':
-        if player.location.e_to:
-            player.move_to(player.location.e_to)
-        else:
-            print('There is nothing to the East!')
-    elif u_input == 's':
-        if player.location.s_to:
-            player.move_to(player.location.s_to)
-        else:
-            print('There is nothing to the South!')
-    elif u_input == 'w':
-        if player.location.w_to:
-            player.move_to(player.location.w_to)
-        else:
-            print('There is nothing to the West!')
+            print(f'Your player does not know how to {verb}.')
     # Any other input
     else:
         print(f'Invalid input.')
     # prompt after each input
-    u_input = input(f'\nPlease decide what to do: {instructions}').lower()
+    player.desc_inventory()
+    u_input = input(
+        f'\nPlease decide what to do: {instructions}').lower().split(" ")
 
 # End of u_input loop: if the user enters "q", quit the game.
 print("\n\nAdventure complete! Quitting..\n\n")

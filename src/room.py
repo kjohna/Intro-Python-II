@@ -17,7 +17,7 @@ class Room:
     def describe_room(self):
         print(f"You find yourself {self.name}")
         print(f"{self.desc}")
-        if(len(self.items)):
+        if len(self.items):
             print("Around you you see: ")
             print(*self.items, sep="\n")
 
@@ -26,7 +26,8 @@ class Room:
 
     def remove_item(self, item_name):
         prev_items = self.items[:]
-        self.items = [filter(
-            lambda item: item.name != item_name,
-            prev_items
-        )]
+        self.items = [item for item in prev_items if item['name'] != item_name]
+        if len(prev_items) > len(self.items):
+            return True
+        else:
+            return False
