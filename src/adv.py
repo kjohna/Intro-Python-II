@@ -1,5 +1,13 @@
-from room import Room
+from item import Item
 from player import Player
+from room import Room
+
+# Declare Items
+item = {
+    'rock': Item("rock", "An ordinary rock"),
+    'wood': Item("wood", "A piece of lumber."),
+    'stick': Item("stick", "A piece of a tree.")
+}
 
 # Declare all the rooms
 
@@ -7,7 +15,7 @@ room = {
     'outside':  Room(
         "Outside Cave Entrance",
         "North of you, the cave mount beckons",
-        [{'name': "rock"}, {'name': "wood"}, {'name': "stick"}]
+        [item['rock'], item['wood'], item['stick']]
     ),
     'foyer':    Room("In a Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -97,15 +105,13 @@ while not u_input[0] == 'q':
         verb = u_input[0]
         noun = u_input[1]
         if verb == 'take':
-            if player.location.remove_item(noun):
-                player.take_item({'name': noun})
+            if player.location.remove_item(player, noun):
                 player.desc_inventory()
                 player.location.desc_inventory()
             else:
                 print(f'There is no {noun} here.')
         elif verb == 'drop':
             if player.drop_item(noun):
-                player.location.add_item({'name': noun})
                 player.desc_inventory()
                 player.location.desc_inventory()
             else:

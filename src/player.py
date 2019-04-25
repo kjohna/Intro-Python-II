@@ -17,12 +17,15 @@ class Player:
         self.items.append(item)
 
     def drop_item(self, item_name):
-        prev_items = self.items[:]
-        self.items = [item for item in prev_items if item['name'] != item_name]
-        if len(prev_items) > len(self.items):
-            return True
-        else:
-            return False
+        # look for item in player's inventory.
+        # player drops first item matching description, return True.
+        # if none found, return False
+        for i, item in enumerate(self.items):
+            if item.name == item_name:
+                self.location.add_item(item)
+                self.items.pop(i)
+                return True
+        return False
 
     def desc_inventory(self):
         if len(self.items):

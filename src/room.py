@@ -28,10 +28,13 @@ class Room:
     def add_item(self, item):
         self.items.append(item)
 
-    def remove_item(self, item_name):
-        prev_items = self.items[:]
-        self.items = [item for item in prev_items if item['name'] != item_name]
-        if len(prev_items) > len(self.items):
-            return True
-        else:
-            return False
+    def remove_item(self, player, item_name):
+        # look for item in room's inventory.
+        # player takes first item matching description, return True.
+        # if none found, return False
+        for i, item in enumerate(self.items):
+            if item.name == item_name:
+                player.take_item(item)
+                self.items.pop(i)
+                return True
+        return False
