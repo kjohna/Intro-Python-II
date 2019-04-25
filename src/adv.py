@@ -48,13 +48,17 @@ print('\n\nWelcome to **ADVENTURES** in Python\n\n')
 
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
-player.location.describe_room()
-
+player.location.desc_room()
+player.location.desc_inventory()
 # * Waits for user input and decides what to do.
-instructions = 'Move [n], [e], [s], or [w]. [q] to quit.\n >  '
-player.desc_inventory()
+instructions = '''\nMove [n], [e], [s], or [w].
+    \n[take item] or [drop item] to take or drop items around you.
+    \n[i] or [inventory] to see items in your inventory.
+    \n[q] to quit.'''
 u_input = input(
-    f'\nPlease decide what to do: {instructions}').lower().split(" ")
+    f'\nPlease decide what to do. [help] for available commands.\n> ')
+.lower()
+.split(" ")
 while not u_input[0] == 'q':
     u_input_len = len(u_input)
     # single command
@@ -81,6 +85,12 @@ while not u_input[0] == 'q':
                 player.move_to(player.location.w_to)
             else:
                 print('There is nothing to the West!')
+        elif u_input[0] == 'i' or u_input[0] == 'inventory':
+            player.desc_inventory()
+        elif u_input[0] == 'help':
+            print(instructions)
+        else:
+            print(f'Invalid input.')
     # double command
     elif u_input_len == 2:
         # assume first part is verb, second is noun
@@ -89,12 +99,15 @@ while not u_input[0] == 'q':
         if verb == 'take':
             if player.location.remove_item(noun):
                 player.take_item({'name': noun})
-                player.location.describe_room()
+                player.desc_inventory()
+                player.location.desc_inventory()
             else:
                 print(f'There is no {noun} here.')
-        if verb == 'drop':
+        elif verb == 'drop':
             if player.drop_item(noun):
                 player.location.add_item({'name': noun})
+                player.desc_inventory()
+                player.location.desc_inventory()
             else:
                 print(f'You do not have {noun}.')
         else:
@@ -103,9 +116,10 @@ while not u_input[0] == 'q':
     else:
         print(f'Invalid input.')
     # prompt after each input
-    player.desc_inventory()
     u_input = input(
-        f'\nPlease decide what to do: {instructions}').lower().split(" ")
+        f'\nPlease decide what to do. [help] for available commands.\n> ')
+    .lower()
+    .split(" ")
 
 # End of u_input loop: if the user enters "q", quit the game.
 print("\n\nAdventure complete! Quitting..\n\n")

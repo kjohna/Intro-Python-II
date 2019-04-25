@@ -14,12 +14,16 @@ class Room:
         # contained within room:
         self.items = items
 
-    def describe_room(self):
+    def desc_room(self):
         print(f"You find yourself {self.name}")
         print(f"{self.desc}")
+
+    def desc_inventory(self):
         if len(self.items):
             print("Around you you see: ")
             print(*self.items, sep="\n")
+        else:
+            print('The room is empty.')
 
     def add_item(self, item):
         self.items.append(item)
