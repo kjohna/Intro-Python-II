@@ -10,8 +10,7 @@ class Player:
 
     def move_to(self, new_loc):
         self.location = new_loc
-        self.location.desc_room()
-        self.location.desc_inventory()
+        print(self.location)
 
     def take_item(self, item):
         self.items.append(item)

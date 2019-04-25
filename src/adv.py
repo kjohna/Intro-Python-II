@@ -13,21 +13,22 @@ item = {
 
 room = {
     'outside':  Room(
-        "Outside Cave Entrance",
+        "Outside",
+        "Cave Entrance",
         "North of you, the cave mount beckons",
         [item['rock'], item['wood'], item['stick']]
     ),
-    'foyer':    Room("In a Foyer", """Dim light filters in from the south. Dusty
+    'foyer':    Room("In a", "Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
 
-    'overlook': Room("At a Grand Overlook", """A steep cliff appears before you, falling
+    'overlook': Room("At a", "Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
 the distance, but there is no way across the chasm."""),
 
-    'narrow':   Room("In a Narrow Passage", """The narrow passage bends here from west
+    'narrow':   Room("In a", "Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air."""),
 
-    'treasure': Room("In the Treasure Chamber", """You've found the long-lost treasure
+    'treasure': Room("In the", "Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
@@ -56,8 +57,7 @@ print('\n\nWelcome to **ADVENTURES** in Python\n\n')
 
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
-player.location.desc_room()
-player.location.desc_inventory()
+print(player.location)
 # * Waits for user input and decides what to do.
 instructions = '''\nMove [n], [e], [s], or [w].
     \n[take item] or [drop item] to take or drop items around you.
