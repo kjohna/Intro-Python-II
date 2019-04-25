@@ -1,4 +1,4 @@
-from item import Item
+from item import Item, LightSource
 from player import Player
 from room import Room
 
@@ -6,7 +6,8 @@ from room import Room
 item = {
     'rock': Item("rock", "An ordinary rock"),
     'wood': Item("wood", "A piece of lumber."),
-    'stick': Item("stick", "A piece of a tree.")
+    'stick': Item("stick", "A piece of a tree."),
+    'torch': LightSource("torch", "A standard torch.", False)
 }
 
 # Declare all the rooms
@@ -16,7 +17,7 @@ room = {
         "Outside",
         "Cave Entrance",
         "North of you, the cave mount beckons",
-        [item['rock'], item['wood'], item['stick']]
+        [item['rock'], item['wood'], item['stick'], item['torch']]
     ),
     'foyer':    Room("In a", "Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -62,6 +63,7 @@ print(player.location)
 instructions = '''\nMove [n], [e], [s], or [w].
     \n[take item] or [drop item] to take or drop items around you.
     \n[i] or [inventory] to see items in your inventory.
+    \n[l] to look around the current room.
     \n[q] to quit.'''
 u_input = input(
     f'\nPlease decide what to do. [help] for available commands.\n> ')\
@@ -95,6 +97,8 @@ while not u_input[0] == 'q':
                 print('There is nothing to the West!')
         elif u_input[0] == 'i' or u_input[0] == 'inventory':
             player.desc_inventory()
+        elif u_input[0] == 'l':
+            player.location.desc_inventory()
         elif u_input[0] == 'help':
             print(instructions)
         else:
